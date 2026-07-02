@@ -1,0 +1,106 @@
+'use client'
+
+import { useState, useRef, useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
+import Image from 'next/image'
+import Link from 'next/link'
+import { LogOut, Settings, Heart, History } from 'lucide-react'
+
+// THIS FILE IS NO LONGER USED - Replaced by Clerk UserButton
+// Keeping as backup
+
+export default function UserMenu() {
+  const { user, logout } = useAuth()
+  const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Đóng menu khi click ngoài
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  if (!user || !user.isLoggedIn) return null
+
+  return (
+    <div className="relative" ref={menuRef}>
+      {/* Avatar button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+      >
+        <div className="relative w-8 h-8 rounded-full overflow-hidden bg-slate-600">
+          <Image
+            src="/images/anime/banner/user1.jpg"
+            alt={user.name}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <span className="text-sm font-medium text-white hidden sm:inline">
+          {user.name}
+        </span>
+      </button>
+
+      {/* Dropdown menu */}
+      {isOpen && (
+        <div className="absolute right-0 mt-3 w-56 bg-[#1e293b] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] p-4">
+            <div className="flex items-center gap-3">
+              <div>
+                <p className="text-white font-bold text-sm">{user.name}</p>
+                <p className="text-white/80 text-xs">{user.email}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Menu items */}
+          <div className="py-2 border-b border-white/10">
+            <Link
+              href="/user/favorite"
+              className="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-white/5 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <Heart size={18} />
+              <span className="text-sm">Anime Yêu Thích</span>
+            </Link>
+            <Link
+              href="/user/history"
+              className="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-white/5 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <History size={18} />
+              <span className="text-sm">Lịch Sử Xem</span>
+            </Link>
+            <Link
+              href="/user/settings"
+              className="flex items-center gap-3 px-4 py-2.5 text-slate-300 hover:bg-white/5 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <Settings size={18} />
+              <span className="text-sm">Cài Đặt</span>
+            </Link>
+          </div>
+
+          {/* Logout */}
+          <button
+            onClick={() => {
+              logout()
+              setIsOpen(false)
+            }}
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:bg-red-500/10 transition-colors text-left"
+          >
+            <LogOut size={18} />
+            <span className="text-sm">Đăng Xuất</span>
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
