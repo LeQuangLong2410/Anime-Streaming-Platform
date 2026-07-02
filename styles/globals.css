@@ -1,0 +1,483 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0f172a; /* slate-900 */
+    --foreground: #f8fafc; /* slate-50 */
+    --accent-purple: #8b5cf6; /* violet-500 */
+    --accent-red: #ef4444; /* red-500 */
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Dark Mode (Default) */
+  /* ────────────────────────────────────────────────────── */
+  html.dark {
+    color-scheme: dark;
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+
+  html.dark body {
+    @apply bg-[#0f172a] text-[#f8fafc];
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Light Mode */
+  /* ────────────────────────────────────────────────────── */
+  html:not(.dark) {
+    color-scheme: light;
+    --background: #f8fafc;
+    --foreground: #0f172a;
+  }
+
+  html:not(.dark) body {
+    @apply bg-[#f8fafc] text-[#0f172a];
+  }
+
+  body {
+    @apply antialiased min-h-screen transition-colors duration-300;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  /* Custom scrollbar setup for anime theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Dark Mode Scrollbar */
+  html.dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6;
+  }
+
+  /* Light Mode Scrollbar */
+  html:not(.dark) ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  html:not(.dark) ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6;
+  }
+
+  /* Global smooth hover transitions */
+  a, button {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
+@layer utilities {
+  /* ────────────────────────────────────────────────────── */
+  /* Glass Effect - Dark & Light Mode */
+  /* ────────────────────────────────────────────────────── */
+  .glass {
+    @apply transition-colors duration-300;
+  }
+
+  html.dark .glass {
+    @apply bg-[#1e293b]/60 backdrop-blur-md border border-white/5;
+  }
+
+  html:not(.dark) .glass {
+    @apply bg-white/40 backdrop-blur-md border border-black/5;
+  }
+
+  .anime-gradient {
+    @apply bg-gradient-to-r from-[#8b5cf6] to-[#ef4444] bg-clip-text text-transparent;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Auth Modal & Form Utilities - Dark & Light Mode */
+  /* ────────────────────────────────────────────────────── */
+
+  .modal-backdrop {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4 transition-colors duration-300;
+  }
+
+  html.dark .modal-backdrop {
+    @apply bg-black/50;
+  }
+
+  html:not(.dark) .modal-backdrop {
+    @apply bg-black/30;
+  }
+
+  .modal-container {
+    @apply relative w-full max-w-md rounded-2xl p-8 shadow-2xl border transition-colors duration-300;
+  }
+
+  html.dark .modal-container {
+    @apply bg-gradient-to-br from-[#1e1e2e] via-[#2d1b3d] to-[#0f172a] border-white/10;
+  }
+
+  html:not(.dark) .modal-container {
+    @apply bg-gradient-to-br from-white via-slate-50 to-slate-100 border-slate-200;
+  }
+
+  .form-input {
+    @apply w-full rounded-lg px-4 py-3 placeholder-slate-500 focus:outline-none transition-colors duration-300 border;
+  }
+
+  html.dark .form-input {
+    @apply bg-white/5 border-white/10 text-white focus:border-[#8b5cf6];
+  }
+
+  html:not(.dark) .form-input {
+    @apply bg-slate-100 border-slate-300 text-[#0f172a] focus:border-[#8b5cf6];
+  }
+
+  .form-label {
+    @apply block text-sm font-medium mb-2 transition-colors duration-300;
+  }
+
+  html.dark .form-label {
+    @apply text-slate-300;
+  }
+
+  html:not(.dark) .form-label {
+    @apply text-slate-700;
+  }
+
+  .btn-primary {
+    @apply px-5 py-2 rounded-full font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  html.dark .btn-primary {
+    @apply bg-[#ff4757] hover:bg-[#ff6b7a] text-white;
+  }
+
+  html:not(.dark) .btn-primary {
+    @apply bg-[#ff4757] hover:bg-[#ff6b7a] text-white;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2 rounded-full font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  html.dark .btn-secondary {
+    @apply bg-white/10 hover:bg-white/20 text-white;
+  }
+
+  html:not(.dark) .btn-secondary {
+    @apply bg-slate-200 hover:bg-slate-300 text-[#0f172a];
+  }
+
+  .btn-google {
+    @apply w-full flex items-center justify-center gap-3 rounded-full py-3 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  html.dark .btn-google {
+    @apply bg-white text-[#1e1e2e] hover:bg-gray-100;
+  }
+
+  html:not(.dark) .btn-google {
+    @apply bg-slate-900 text-white hover:bg-slate-800;
+  }
+
+  .error-message {
+    @apply mt-1 text-xs text-red-400;
+  }
+
+  .success-message {
+    @apply rounded-xl p-4 text-center transition-colors duration-300;
+  }
+
+  html.dark .success-message {
+    @apply bg-green-500/20 border border-green-500;
+  }
+
+  html:not(.dark) .success-message {
+    @apply bg-green-100 border border-green-300;
+  }
+
+  .alert-banner {
+    @apply rounded-xl p-4 text-center font-bold text-sm transition-colors duration-300;
+  }
+
+  html.dark .alert-banner {
+    @apply bg-[#ff4757] text-white;
+  }
+
+  html:not(.dark) .alert-banner {
+    @apply bg-red-500 text-white;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Animation Utilities */
+  /* ────────────────────────────────────────────────────── */
+
+  .animate-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-in-from-top-2 {
+    animation: slideInFromTop 0.3s ease-in-out;
+  }
+
+  .scale-in {
+    animation: scaleIn 0.3s ease-in-out;
+  }
+
+  .pulse-soft {
+    animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Keyframe Animations */
+  /* ────────────────────────────────────────────────────── */
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInFromTop {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulseSoft {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* User Menu & Avatar Utilities */
+  /* ────────────────────────────────────────────────────── */
+
+  .avatar-sm {
+    @apply relative w-8 h-8 rounded-full overflow-hidden bg-slate-600;
+  }
+
+  .avatar-md {
+    @apply relative w-12 h-12 rounded-full overflow-hidden border-2 bg-slate-600 transition-colors duration-300;
+  }
+
+  html.dark .avatar-md {
+    @apply border-white;
+  }
+
+  html:not(.dark) .avatar-md {
+    @apply border-slate-700;
+  }
+
+  .avatar-lg {
+    @apply relative w-16 h-16 rounded-full overflow-hidden border-2 bg-slate-600 transition-colors duration-300;
+  }
+
+  html.dark .avatar-lg {
+    @apply border-white;
+  }
+
+  html:not(.dark) .avatar-lg {
+    @apply border-slate-700;
+  }
+
+  .dropdown-item {
+    @apply flex items-center gap-3 px-4 py-2.5 transition-colors cursor-pointer rounded;
+  }
+
+  html.dark .dropdown-item {
+    @apply text-slate-300 hover:bg-white/5;
+  }
+
+  html:not(.dark) .dropdown-item {
+    @apply text-slate-600 hover:bg-slate-100;
+  }
+
+  .dropdown-item-danger {
+    @apply flex items-center gap-3 px-4 py-2.5 transition-colors cursor-pointer rounded;
+  }
+
+  html.dark .dropdown-item-danger {
+    @apply text-red-400 hover:bg-red-500/10;
+  }
+
+  html:not(.dark) .dropdown-item-danger {
+    @apply text-red-600 hover:bg-red-100;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Card & Container Utilities - Dark & Light Mode */
+  /* ────────────────────────────────────────────────────── */
+
+  .card {
+    @apply rounded-lg p-4 transition-colors duration-300 border;
+  }
+
+  html.dark .card {
+    @apply bg-[#1e293b] border-white/10;
+  }
+
+  html:not(.dark) .card {
+    @apply bg-white border-slate-200;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300;
+  }
+
+  html.dark .card-hover {
+    @apply hover:border-white/20 hover:shadow-lg;
+  }
+
+  html:not(.dark) .card-hover {
+    @apply hover:border-slate-300 hover:shadow-lg;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold mb-4 transition-colors duration-300;
+  }
+
+  html.dark .section-title {
+    @apply text-white;
+  }
+
+  html:not(.dark) .section-title {
+    @apply text-slate-900;
+  }
+
+  .section-subtitle {
+    @apply text-sm mb-2 transition-colors duration-300;
+  }
+
+  html.dark .section-subtitle {
+    @apply text-slate-400;
+  }
+
+  html:not(.dark) .section-subtitle {
+    @apply text-slate-600;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Badge Utilities */
+  /* ────────────────────────────────────────────────────── */
+
+  .badge-rating {
+    @apply px-2 py-1 rounded text-xs font-semibold transition-colors duration-300;
+  }
+
+  html.dark .badge-rating {
+    @apply bg-black/75 text-yellow-400;
+  }
+
+  html:not(.dark) .badge-rating {
+    @apply bg-yellow-100 text-yellow-700;
+  }
+
+  .badge-episode {
+    @apply px-2 py-1 rounded text-xs font-semibold transition-colors duration-300 text-white;
+  }
+
+  html.dark .badge-episode {
+    @apply bg-[#ff4757];
+  }
+
+  html:not(.dark) .badge-episode {
+    @apply bg-red-500;
+  }
+
+  .badge-trending {
+    @apply px-2 py-1 rounded text-xs font-semibold transition-colors duration-300 text-white;
+  }
+
+  html.dark .badge-trending {
+    @apply bg-gradient-to-r from-[#ff4757] to-[#ff6b7a];
+  }
+
+  html:not(.dark) .badge-trending {
+    @apply bg-gradient-to-r from-red-500 to-red-600;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Text Utilities */
+  /* ────────────────────────────────────────────────────── */
+
+  .text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#8b5cf6] via-[#ec4899] to-[#ff4757] bg-clip-text text-transparent;
+  }
+
+  /* ────────────────────────────────────────────────────── */
+  /* Responsive Utilities */
+  /* ────────────────────────────────────────────────────── */
+
+  .container-max {
+    @apply w-full max-w-[1400px] mx-auto;
+  }
+
+  .grid-anime {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4;
+  }
+
+  .grid-anime-5 {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4;
+  }
+}
