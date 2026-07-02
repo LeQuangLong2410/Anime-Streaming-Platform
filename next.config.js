@@ -8,7 +8,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.dicebear.com',
       },
-      // Thêm nếu bạn có hình ảnh từ domain khác sau này
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
